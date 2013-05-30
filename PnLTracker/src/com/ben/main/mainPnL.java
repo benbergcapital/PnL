@@ -35,7 +35,7 @@ public class mainPnL {
 	   
 	    String url = "jdbc:mysql://localhost:3306/Stocks";
 	    String user = "root";
-	    String password = "typhoon";
+	    String password = "root";
 	public static void main(String[] args) throws SQLException  {
 	
 
