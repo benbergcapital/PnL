@@ -264,6 +264,14 @@ public class mainPnL {
 		
 	//	String query = "insert into PnL values ('"+Ticker+"','"+LastPx+"','"+delta+"','"+dateFormat.format(date)+"')";
 		ExecuteQuery("insert into pnl values ('"+Ticker+"','"+LastPx+"','"+Double.valueOf(df2.format(delta))+"','"+dateFormat.format(date)+"','"+Double.valueOf(df2.format(Pct))+"')");
+			
+			Bloomberg_scrape BS = new Bloomberg_scrape();
+			String FX = BS.getFX();
+			
+			ExecuteQuery("insert into FX_Rate values ('"+dateFormat.format(date)+"','"+FX+"')");
+			
+			
+			
 			}
 			catch (Exception e)
 			{
