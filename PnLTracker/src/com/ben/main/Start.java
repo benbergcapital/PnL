@@ -26,7 +26,7 @@ import org.json.simple.JSONObject;
 //test222
 
 
-public class mainPnL {
+public class Start {
 
 		 ResultSet rs = null;
 		 Connection con = null;
@@ -39,7 +39,7 @@ public class mainPnL {
 	public static void main(String[] args) throws SQLException  {
 	
 
-		mainPnL m = new mainPnL();
+		Start m = new Start();
 		try {
 		//	m.Value_Line_json();
 			
@@ -263,12 +263,9 @@ public class mainPnL {
 		
 		
 	//	String query = "insert into PnL values ('"+Ticker+"','"+LastPx+"','"+delta+"','"+dateFormat.format(date)+"')";
-		ExecuteQuery("insert into pnl values ('"+Ticker+"','"+LastPx+"','"+Double.valueOf(df2.format(delta))+"','"+dateFormat.format(date)+"','"+Double.valueOf(df2.format(Pct))+"')");
+		ExecuteQuery("insert into PnL values ('"+Ticker+"','"+LastPx+"','"+Double.valueOf(df2.format(delta))+"','"+dateFormat.format(date)+"','"+Double.valueOf(df2.format(Pct))+"')");
 			
-			Bloomberg_scrape BS = new Bloomberg_scrape();
-			String FX = BS.getFX();
 			
-			ExecuteQuery("insert into FX_Rate values ('"+dateFormat.format(date)+"','"+FX+"')");
 			
 			
 			
@@ -282,6 +279,19 @@ public class mainPnL {
 		
 		}
 		
+		try{
+				
+		Bloomberg_scrape BS = new Bloomberg_scrape();
+		String FX = BS.getFX();
+		
+		ExecuteQuery("insert into FX_Rate values ('"+dateFormat.format(date)+"','"+FX+"')");
+		}
+		catch (Exception e)
+		{
+			LogOutput(e.toString());
+			
+			
+		}
 		
 	}
 	public String LoadData_str(String Message) throws SQLException
