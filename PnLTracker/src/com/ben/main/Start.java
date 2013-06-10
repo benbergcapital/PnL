@@ -52,174 +52,6 @@ public class Start {
 	}
 	
 	
-	public void Value_Line_json() throws SQLException
-	{
-		JSONObject obj=new JSONObject();
-		  JSONObject obj_cols_1=new JSONObject();
-		  JSONObject obj_cols_2=new JSONObject();
-		  obj_cols_1.put("id","");
-		  obj_cols_1.put("label","BAC");
-		  obj_cols_1.put("type","string");
-		  
-		  obj_cols_2.put("id","");
-		  obj_cols_2.put("label","$Value");
-		  obj_cols_2.put("type","number");
-		  
-		  LinkedList l_cols = new LinkedList();
-		  
-		  l_cols.add(obj_cols_1);
-		  l_cols.add(obj_cols_2);
-		  obj.put("cols", l_cols);
-		  try
-		  {
-			  
-		rs = LoadData("Select date  from PNL where Ticker = 'BAC'");
-		  }
-		  catch (Exception e)
-		  {
-			  System.out.println(e.toString());
-			  
-			  
-		  }
-		String Ticker;
-		String LastPx;
-		String Qty;
-		String AvgPx;
-		Double Value;
-		GoogleScrape gs = new GoogleScrape();
-		List<String> Date_list = new ArrayList<String>();
-		 LinkedList l_final = new LinkedList();
-		 
-		 
-		while (rs.next())
-		
-		{
-			//Ticker = (rs.getString(1));
-			Date_list.add(rs.getString(1));
-		}
-		for (String name : Date_list)
-		{	
-		Ticker = ("BAC");
-	//	LastPx = gs.getLast(Ticker);
-  //		Qty = LoadData_str("Select Quantity from CurrentHoldings where Ticker = '"+Ticker+"'");
-	//	AvgPx = LoadData_str("Select AvgPx from CurrentHoldings where Ticker = '"+Ticker+"'");
-	//	Value = Double.valueOf(LastPx)*Double.valueOf(Qty);
-				  
-		  JSONObject obj2=new JSONObject();
-		  JSONObject obj3=new JSONObject();
-		  JSONObject obj4=new JSONObject();
-		  JSONObject obj_col=new JSONObject();
-		  
-		  obj3.put("v", name);
-		  obj3.put("f", null);
-		  obj4.put("v",Ticker);
-		  obj4.put("f", null);
-		 
-		  LinkedList l1 = new LinkedList();
-		  LinkedHashMap m1 = new LinkedHashMap();
-		  l1.add(obj3);
-		  l1.add(obj4);
-		  m1.put("c",l1);
-		  
-		  l_final.add(m1);
-		}
-		obj.put("rows",l_final);
-		 System.out.println(obj);
-	//	  return obj.toJSONString();
-		
-	}
-	private void json() throws SQLException
-	{
-		JSONObject obj=new JSONObject();
-		  JSONObject obj_cols_1=new JSONObject();
-		  JSONObject obj_cols_2=new JSONObject();
-		  obj_cols_1.put("id","");
-		  obj_cols_1.put("label","Topping");
-		  obj_cols_1.put("type","string");
-		  
-		  obj_cols_2.put("id","");
-		  obj_cols_2.put("label","Slices");
-		  obj_cols_2.put("type","number");
-		  
-		  LinkedList l_cols = new LinkedList();
-		  
-		  l_cols.add(obj_cols_1);
-		  l_cols.add(obj_cols_2);
-		  obj.put("cols", l_cols);
-		rs = LoadData("Select * from CurrentHoldings");
-		
-		String Ticker;
-		String LastPx;
-		String Qty;
-		String AvgPx;
-		
-		List<String> Tickers = new ArrayList<String>();
-		 LinkedList l_final = new LinkedList();
-		while (rs.next())
-		{
-			//Ticker = (rs.getString(1));
-			Tickers.add(rs.getString(1));
-		}
-		for (String name : Tickers)
-		{	
-		Ticker = (name);
-  		Qty = LoadData_str("Select Quantity from CurrentHoldings where Ticker = '"+Ticker+"'");
-		AvgPx = LoadData_str("Select AvgPx from CurrentHoldings where Ticker = '"+Ticker+"'");
-		
-				  
-		  JSONObject obj2=new JSONObject();
-		  JSONObject obj3=new JSONObject();
-		  JSONObject obj4=new JSONObject();
-		  JSONObject obj_col=new JSONObject();
-		  
-		  
-
-		  
-		  obj3.put("v", Ticker);
-		  obj3.put("f", null);
-		  obj4.put("v",Qty);
-		  obj4.put("f", null);
-		 
-		  LinkedList l1 = new LinkedList();
-		  LinkedHashMap m1 = new LinkedHashMap();
-		  l1.add(obj3);
-		  l1.add(obj4);
-		  m1.put("c",l1);
-		  
-		  l_final.add(m1);
-		}
-		obj.put("rows",l_final);
-		  //obj_col.put("rows", m1);
-//		  JSONObject obj6=new JSONObject();
-//		  JSONObject obj5=new JSONObject();
-//		  obj5.put("v", "pepper");
-//		  obj5.put("f", null);
-//		  obj6.put("v",6);
-//		  obj6.put("f", null);
-//		  LinkedList l2 = new LinkedList();
-//		  LinkedHashMap m2 = new LinkedHashMap();
-//		  l2.add(obj5);
-//		  l2.add(obj6);
-//		  m2.put("c",l2);
-		  
-		 
-	//	  l_final.add(m1);
-		//  l_final.add(m2);
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  System.out.print(obj);
-		  
-		  
-		  
-	}
-	
 	
 	
 	
@@ -251,10 +83,12 @@ public class Start {
 			{
 		Ticker = (name);
   		LastPx = gs.getLast(name);
-		Qty = LoadData_str("Select Quantity from currentholdings where Ticker = '"+Ticker+"'");
+  		Qty = LoadData_str("Select Quantity from currentholdings where Ticker = '"+Ticker+"'");
 		AvgPx = LoadData_str("Select AvgPx from currentholdings where Ticker = '"+Ticker+"'");
 		
-		delta = (Double.valueOf(LastPx)-Double.valueOf(AvgPx))* Double.valueOf(Qty);
+		if (LastPx !=null || LastPx != "0" )
+		{
+			delta = (Double.valueOf(LastPx)-Double.valueOf(AvgPx))* Double.valueOf(Qty);
 		
 		Pct = ((Double.valueOf(LastPx) / Double.valueOf(AvgPx))-1)*100;
 				
@@ -264,7 +98,11 @@ public class Start {
 		
 	//	String query = "insert into PnL values ('"+Ticker+"','"+LastPx+"','"+delta+"','"+dateFormat.format(date)+"')";
 		ExecuteQuery("insert into PnL values ('"+Ticker+"','"+LastPx+"','"+Double.valueOf(df2.format(delta))+"','"+dateFormat.format(date)+"','"+Double.valueOf(df2.format(Pct))+"')");
+		}
+		else
+		{
 			
+		}
 			
 			
 			

@@ -36,11 +36,6 @@ public class GoogleScrape {
 		Elements links_curr = content_curr.getElementsByClass("pr");
 		
 		
-		
-		
-	
-		
-		
 	
 		for (Element link : links_curr) {
 			System.out.println(link.text());
