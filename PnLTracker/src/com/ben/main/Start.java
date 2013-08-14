@@ -33,7 +33,7 @@ public class Start {
 		 Statement st = null;
 	   
 	   
-	    String url = "jdbc:mysql://localhost:3306/Stocks";
+	    String url = "jdbc:mysql://192.168.0.6:3306/Stocks";
 	    String user = "root";
 	    String password = "root";
 	public static void main(String[] args) throws SQLException  {
@@ -97,7 +97,7 @@ public class Start {
 		
 		
 	//	String query = "insert into PnL values ('"+Ticker+"','"+LastPx+"','"+delta+"','"+dateFormat.format(date)+"')";
-		ExecuteQuery("insert into PnL values ('"+Ticker+"','"+LastPx+"','"+Double.valueOf(df2.format(delta))+"','"+dateFormat.format(date)+"','"+Double.valueOf(df2.format(Pct))+"')");
+		ExecuteQuery("insert into pnl values ('"+Ticker+"','"+LastPx+"','"+Double.valueOf(df2.format(delta))+"','"+dateFormat.format(date)+"','"+Double.valueOf(df2.format(Pct))+"')");
 		}
 		else
 		{
@@ -122,7 +122,7 @@ public class Start {
 		Bloomberg_scrape BS = new Bloomberg_scrape();
 		String FX = BS.getFX();
 		
-		ExecuteQuery("insert into FX_Rate values ('"+dateFormat.format(date)+"','"+FX+"')");
+		ExecuteQuery("insert into fx_rate values ('"+dateFormat.format(date)+"','"+FX+"')");
 		}
 		catch (Exception e)
 		{
